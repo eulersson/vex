@@ -1,0 +1,8 @@
+#pragma opname "create_geo"
+#pragma oplabel "Create Geometry"
+#pragma label posX "Position X"
+
+cvex create_point(float posX = 0)
+{
+    addpoint(geoself(), posX);
+}

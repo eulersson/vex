@@ -1,0 +1,27 @@
+#pragma opname "vih_golden_ratio"
+#pragma oplabel "VIH Golden Ratio"
+
+vector polar_to_cartesian(float theta; float radius)
+{
+    return set(cos(theta)*radius, 0, sin(theta)*radius);
+}
+
+sop create_geo()
+{
+    int count = 500;
+    float bound = 10.0;
+    float tau = 6.28318530718;
+    float phi  = (1 + sqrt(5)) / 2;
+    float theta = 0;
+    float golden_angle = (2 - phi) * tau;
+    vector pos = {0, 0, 0};
+    float radius;
+        
+    for (int i = 0; i < count; i++)
+    {    
+        addpoint(geoself(), pos);
+        radius = bound * pow((float(i)/ float(count)), ch("power_exp"));
+        theta += golden_angle;
+        pos = polar_to_cartesian(theta, radius);
+    } 
+}

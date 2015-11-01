@@ -1,0 +1,76 @@
+#pragma opname "superformula"
+#pragma oplabel "Superformula"
+#pragma label segments "Segments"
+#pragma range segments 10 10000
+#pragma label scale "Scale"
+#pragma range scale 0.001 10
+#pragma label a "a"
+#pragma range a 0 2
+#pragma label b "b"
+#pragma range b 0 2
+#pragma label m "m"
+#pragma range m 0 20
+#pragma label n1 "n1"
+#pragma range n1 0 20
+#pragma label n2 "n2"
+#pragma range n2 0 20
+#pragma label n3 "n3"
+#pragma range n3 0 20
+#pragma label inc_init "Initialise"
+#pragma range inc_init 0 1000
+#pragma label inc_step "Increment"
+#pragma range inc_step 0 10
+#pragma label inc_limit "Limit"
+#pragma range inc_limit 0 1000
+
+
+int render_superformula( int segments;
+                         float scale;
+                         float a;
+                         float b;
+                         float m;
+                         float n1;
+                         float n2;
+                         float n3;
+                         float inc_init;
+                         float inc_step;
+                         float inc_limit)
+{
+    float _a = a;
+    float _b = a;
+    float step = 6.28318 / segments;
+    float phi = 0.0;
+
+    for (float t = inc_init; t < inc_limit; t += inc_step )
+    {
+        for (int i=0; i<segments; i++)
+        {
+            float c = pow(abs(cos((m * phi) / 4) / _a), n2);
+            float s = pow(abs(sin((m * phi) / 4) / _b), n3);
+            float r = pow((c + s), -(1/n1));
+
+            // create geometry and increment angle
+            addpoint(geoself(), set(r * scale * cos(phi), r * scale * sin(phi), 0 ));
+            phi += step;
+        }
+        _a += t;
+        _b += t * 2;
+    }
+
+    return 1;
+}
+
+cvex superformula_main(int segments = 100;
+         float scale = 1;
+         float a = 1.0;
+         float b = 1.0;
+         float m = 3.0;
+         float n1 = 5.0;
+         float n2 = 18.0;
+         float n3 = 18.0;
+         float inc_init = 0.0;
+         float inc_step = 0.005;
+         float inc_limit = 0.10)
+{
+    render_superformula(segments, scale, a, b, m, n1, n2, n3, inc_init, inc_step, inc_limit);
+}

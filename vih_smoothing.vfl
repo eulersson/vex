@@ -1,0 +1,20 @@
+#pragma opname "vih_smoothing"
+#pragma oplabel "VIH Smoothing"
+
+sop vex_smoothing()
+{
+    vector avg = {0, 0, 0};
+
+    float weight = 1.0 / neighbourcount(0, ptnum);
+
+    foreach(int j; neighbours(0, ptnum))
+    {
+        avg += weight * (point(0, "P", j) - P);
+    }
+
+    float lambda = 0.333;
+    
+    P += lambda * avg;
+
+    Cd = {0.1, 0.8, 0.1};
+}

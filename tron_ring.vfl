@@ -1,0 +1,60 @@
+#pragma opname "tron_rings"
+#pragma oplabel "Tron Legacy Ring Generator"
+#define TAU 6.283185307179586
+#define PI  3.141592653589793
+#pragma label rad_min     "Radius Min"
+#pragma range rad_min 0 10
+#pragma label rad_max     "Radius Max"
+#pragma range rad_max 0 10
+#pragma label start_theta "Theta Start"
+#pragma range start_theta 0 6.283185307179586
+#pragma label end_theta   "Theta End"
+#pragma range end_theta 0 6.283185307179586
+#pragma label resolution  "Resolution"
+#pragma range resolution 1 70
+
+
+
+int segment(float rad_min;
+            float rad_max;
+            float start_theta;
+            float end_theta;
+            int resolution;) 
+{
+    float theta;
+    int pt;
+    string mode = "polyline";
+    int prim = addprim(geoself(), mode);
+    float theta_step = (end_theta - start_theta) / (float)resolution;
+    // inner radius
+    for(int step = 0; step <= resolution; step++)
+    {
+            theta = start_theta + (theta_step * step);
+            pt = addpoint(geoself(), set(cos(theta)*rad_min, sin(theta)*rad_min, 0));
+            addvertex(geoself(), prim, pt);
+
+    }
+
+    for(int step = resolution; step >= 0; step--)
+    {
+            theta = start_theta + (theta_step * step);
+            pt = addpoint(geoself(), set(cos(theta)*rad_max, sin(theta)*rad_max, 0));
+            addvertex(geoself(), prim, pt);
+    }
+    
+    if (mode == "polyline")
+    {
+        addvertex(geoself(), prim, 0);
+    }
+
+    return (int)1;
+}
+
+cvex tron(float rad_min = 0.5;
+          float rad_max = 2.0;
+          float start_theta = 0.0;
+          float end_theta = PI;
+          int resolution = 20;)
+{
+    segment(rad_min, rad_max, start_theta, end_theta, resolution);
+}

@@ -1,0 +1,25 @@
+#pragma opname "vih_volume_collide"
+#pragma oplabel "VIH Volume Collide"
+#pragma opmininputs 2
+#pragma opmaxinputs 2
+sop
+vih_volume_collide()
+{
+    float dist = volumesample(1, "sdf", P);
+
+    // check for collision
+    if (dist < 0) {
+        vector grad = volumegradient(1, "sdf", P);
+        vector disp_dir = normalize(grad);
+
+        // Offset the position of the current point
+        // in the direction of the gradient of the
+        // sdf which should point outwards. The distance
+        // we push the point is the sdf value (the distance)
+        // we are inside the volume.
+        P += disp_dir * abs(dist);
+
+        // pink it up
+        Cd = {0.0, 0.5, 0.0};
+    }
+}

@@ -1,0 +1,37 @@
+#pragma opname "vih_geo_flatten"
+#pragma oplabel "VIH Geometry Flatten"
+#pragma label threshold "Threshold"
+#pragma range threshold -5 5
+
+#pragma label axis "Axis"
+#pragma choice axis "x" "X Axis"
+#pragma choice axis "y" "Y Axis"
+#pragma choice axis "z" "Z Axis"
+
+sop flatten_geo(float threshold = 0; string axis = "z")
+{
+    if (axis == "x")
+    {
+        if (P.x < threshold)
+        {
+            P.x = threshold;
+            Cd.r = 0;
+        }
+    }
+    if (axis == "y")
+    {
+        if (P.y < threshold)
+        {
+            P.y = threshold;
+            Cd.g = 0;
+        }
+    }
+    if (axis == "z")
+    {
+        if (P.z < threshold)
+        {
+            P.z = threshold;
+            Cd.b = 0;
+        }
+    }
+}

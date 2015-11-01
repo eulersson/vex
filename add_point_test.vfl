@@ -1,0 +1,5 @@
+sop create_point()
+{
+    vector pos = {1, 0, 0};
+    addpoint(geoself(), pos);
+}

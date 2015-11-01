@@ -1,0 +1,12 @@
+#pragma opname "vih_geo_bulge"
+#pragma oplabel "VIH Geometry Bulge"
+#pragma label distance "Distance"
+#pragma range distance 0.0001 0.3
+#pragma label col "Colour"
+#pragma hint col color
+sop
+vih_geo_bulge( float distance = 0.1; vector col = {0.6, 0.1, 0.2} )
+{
+	P += N * distance;
+	Cd = col;
+}
