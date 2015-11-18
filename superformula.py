@@ -1,5 +1,13 @@
+import sys
+import subprocess
+sys.path.append('/opt/hfs15.0.244.16/houdini/python2.7libs')
+
 import hou
-otl_file = 'D:/houdini_projects/vex/superformula.otl'
+hou.hipFile.save(file_name='/home/ramon/hello.hipnc')
+
+
+hou.hipFile.load(file_name='/home/ramon/hello.hipnc')
+otl_file = '/home/ramon/dev/vex/superformula.otl'
 hou.hda.installFile(otl_file)
 
 sf_vex  = hou.node('/shop').createNode('superformula')
@@ -14,4 +22,6 @@ sf_attribvop.parm('shoppath').set('/shop/superformula1')
 sf_attribvop.setDisplayFlag(True)
 
 
+hou.hipFile.save(file_name='/home/ramon/hello.hipnc')
+subprocess.Popen(['houdinifx', '/home/ramon/hello.hipnc'])
 
